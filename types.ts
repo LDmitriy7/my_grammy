@@ -1,7 +1,7 @@
 import { Context, ParseModeFlavor, SessionFlavor } from "./deps.ts"
 
 export type Session = {
-  state: string | undefined
+  state?: string
 }
 
 type BaseContext<S extends Session = Session> =
