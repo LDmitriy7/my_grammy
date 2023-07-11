@@ -1,7 +1,8 @@
-import { Composer, Context } from "./deps.ts"
+import { Composer } from "./deps.ts"
+import { BaseContext } from "./types.ts"
 
 export class Observer<
-  C extends Context,
+  C extends BaseContext,
   Command extends string = string,
   State extends string = string,
   QueryPrefix extends string = string,
@@ -31,4 +32,8 @@ export class Observer<
       const data = ctx.callbackQuery?.data
       return data ? data.startsWith(prefix) : false
     })
+
+  state<O>(value: State) {
+    return this.filter((c) => c.session.state == value) as O
+  }
 }
