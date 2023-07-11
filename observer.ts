@@ -33,7 +33,7 @@ export class Observer<
       return data ? data.startsWith(prefix) : false
     })
 
-  state<O>(value: State) {
-    return this.filter((c) => c.session.state == value) as O
+  state(value: State) {
+    return this.filter((c) => c.session.state == value)
   }
 }

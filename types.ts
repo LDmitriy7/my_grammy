@@ -1,11 +1,9 @@
 import { Context, ParseModeFlavor, SessionFlavor } from "./deps.ts"
 
-export type Session = {
+export type BaseSession = {
   state?: string
 }
 
-type BaseContext<S extends Session = Session> =
+export type BaseContext<S extends BaseSession = BaseSession> =
   & ParseModeFlavor<Context>
   & SessionFlavor<S>
-
-export type { BaseContext }
