@@ -11,7 +11,7 @@ import {
 } from "./deps.ts"
 import { BaseContext, BaseSession } from "./types.ts"
 
-export default class Bot<S extends BaseSession> extends _Bot<BaseContext<S>> {
+export class Bot<S extends BaseSession> extends _Bot<BaseContext<S>> {
   constructor(token: string, defaultSession: S) {
     super(token)
     this.use(sequentialize(getSessionKey))

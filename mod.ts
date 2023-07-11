@@ -1,3 +1,4 @@
+export { Bot } from "./bot.ts"
 export { bold, link } from "./markup.ts"
 export { MessageCollector, messageCollector } from "./messageCollector.ts"
 export { Msg } from "./msg.ts"
