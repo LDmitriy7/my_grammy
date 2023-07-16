@@ -25,6 +25,7 @@ export class Observer<
   video = () => this.on("message:video")
   audio = () => this.on("message:audio")
   contact = () => this.on("message:contact")
+  sticker = () => this.on("message:sticker")
 
   // deno-lint-ignore no-explicit-any
   set handler(callback: (ctx: C) => any) {
