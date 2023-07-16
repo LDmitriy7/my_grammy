@@ -13,7 +13,7 @@ export class Observer<
     return new Observer<_C, Command, State, QueryPrefix>(composer)
   }
 
-  on(query: FilterQuery) {
+  on<Q extends FilterQuery>(query: Q) {
     return this.branch(this.composer.on(query))
   }
 
