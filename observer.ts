@@ -1,4 +1,4 @@
-import { Composer } from "./deps.ts"
+import { Composer, FilterQuery } from "./deps.ts"
 import { BaseContext } from "./types.ts"
 
 export class Observer<
@@ -13,6 +13,19 @@ export class Observer<
     return new Observer<_C, Command, State, QueryPrefix>(composer)
   }
 
+  on(query: FilterQuery) {
+    return this.branch(this.composer.on(query))
+  }
+
+  message = () => this.on("message")
+  channelPost = () => this.on("channel_post")
+  anyQuery = () => this.on("callback_query")
+  text = () => this.on("message:text")
+  photo = () => this.on("message:photo")
+  video = () => this.on("message:video")
+  audio = () => this.on("message:audio")
+  contact = () => this.on("message:contact")
+
   // deno-lint-ignore no-explicit-any
   set handler(callback: (ctx: C) => any) {
     this.composer.use(callback)
@@ -23,8 +36,6 @@ export class Observer<
   }
 
   command = (value: Command) => this.branch(this.composer.command(value))
-  text = () => this.branch(this.composer.on("message:text"))
-  message = () => this.branch(this.composer.on("message"))
   button = (text: string) => this.filter((c) => c.message?.text == text)
 
   query = (prefix: QueryPrefix) =>

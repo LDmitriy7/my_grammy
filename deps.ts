@@ -5,6 +5,7 @@ export {
   InlineKeyboard,
   session,
   type SessionFlavor,
+  type FilterQuery,
 } from "https://deno.land/x/grammy@v1.17.2/mod.ts"
 export {
   hydrateReply,

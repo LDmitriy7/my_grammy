@@ -32,7 +32,8 @@ export class Bot<S extends BaseSession> extends _Bot<BaseContext<S>> {
     return new Bot(env.str("TOKEN"), defaultSession)
   }
 
-  run() {
+  async run() {
+    await this.api.deleteWebhook()
     run(this)
   }
 }
