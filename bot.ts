@@ -1,3 +1,4 @@
+import { Update } from "tg"
 import {
   Bot as _Bot,
   Context,
@@ -32,11 +33,18 @@ export class Bot<S extends BaseSession> extends _Bot<BaseContext<S>> {
     return new Bot(env.str("TOKEN"), defaultSession)
   }
 
-  async run() {
+  async run(allowed_updates = ALLOWED_UPDATES) {
     await this.api.deleteWebhook()
-    run(this)
+    run(this, { runner: { fetch: { allowed_updates } } })
   }
 }
+
+type AllowedUpdates = ReadonlyArray<Exclude<keyof Update, "update_id">>
+const ALLOWED_UPDATES: AllowedUpdates = [
+  "channel_post",
+  "message",
+  "callback_query",
+]
 
 // @ts-ignore: TODO
 const kv = await Deno.openKv()
