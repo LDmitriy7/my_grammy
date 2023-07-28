@@ -12,9 +12,11 @@ import {
 } from "./deps.ts"
 import { BaseContext, BaseSession } from "./types.ts"
 
+const getToken = () => env.str("TOKEN")
+
 export class Bot<S extends BaseSession> extends _Bot<BaseContext<S>> {
-  constructor(token: string, defaultSession: S) {
-    super(token)
+  constructor(token: string | null, defaultSession: S) {
+    super(token ?? getToken())
     this.use(sequentialize(getSessionKey))
     this.initParseModePlugin()
     this.initSessionPlugin(defaultSession)
@@ -30,7 +32,7 @@ export class Bot<S extends BaseSession> extends _Bot<BaseContext<S>> {
   }
 
   static fromEnv<S extends BaseSession>(defaultSession: S) {
-    return new Bot(env.str("TOKEN"), defaultSession)
+    return new Bot(null, defaultSession)
   }
 
   async run(allowed_updates = ALLOWED_UPDATES) {
