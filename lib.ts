@@ -11,6 +11,22 @@ import { BaseContext } from "./types.ts"
 
 const sendOptions = { disable_web_page_preview: true }
 
+export function sendPhoto<C extends Context>(
+  bot: Bot<C>,
+  chatId: number,
+  photoId: string,
+  text?: string,
+  entities?: MessageEntity[],
+) {
+  const opts = {
+    caption: text,
+    caption_entities: entities,
+    parse_mode: undefined,
+  }
+  if (!entities?.length) delete opts.parse_mode
+  return bot.api.sendPhoto(chatId, photoId, opts)
+}
+
 const sendMessage = (ctx: BaseContext, chatId: number, msg: Msg) =>
   ctx.api.sendMessage(
     chatId,

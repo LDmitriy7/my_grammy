@@ -5,13 +5,14 @@ import {
   env,
   hydrateReply,
   InlineKeyboardButton,
+  MessageEntity,
   parseMode,
   run,
   sequentialize,
   session,
   Update,
 } from "./deps.ts"
-import { setKeyboard } from "./lib.ts"
+import { sendPhoto, setKeyboard } from "./lib.ts"
 import { BaseContext, BaseSession } from "./types.ts"
 
 const getToken = () => env.str("TOKEN")
@@ -49,6 +50,15 @@ export class Bot<S extends BaseSession> extends _Bot<BaseContext<S>> {
     inline_keyboard: InlineKeyboardButton[][],
   ) {
     return setKeyboard(this, chatId, msgId, inline_keyboard)
+  }
+
+  sendPhoto(
+    chatId: number,
+    photoId: string,
+    text?: string,
+    entities?: MessageEntity[],
+  ) {
+    return sendPhoto(this, chatId, photoId, text, entities)
   }
 }
 
