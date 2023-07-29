@@ -1,5 +1,6 @@
 import {
   Bot,
+  Context,
   InlineKeyboard,
   InlineKeyboardButton,
   InlineKeyboardMarkup,
@@ -35,8 +36,8 @@ export function parseQuery<Prefix extends string>(
   )
 }
 
-export function setKeyboard(
-  bot: Bot,
+export function setKeyboard<C extends Context>(
+  bot: Bot<C>,
   chatId: number | string,
   msgId: number,
   inline_keyboard: InlineKeyboardButton[][],

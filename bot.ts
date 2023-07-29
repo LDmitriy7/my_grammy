@@ -4,12 +4,14 @@ import {
   DenoKVAdapter,
   env,
   hydrateReply,
+  InlineKeyboardButton,
   parseMode,
   run,
   sequentialize,
   session,
   Update,
 } from "./deps.ts"
+import { setKeyboard } from "./lib.ts"
 import { BaseContext, BaseSession } from "./types.ts"
 
 const getToken = () => env.str("TOKEN")
@@ -39,6 +41,14 @@ export class Bot<S extends BaseSession> extends _Bot<BaseContext<S>> {
     await this.api.deleteWebhook()
     this.catch(console.error)
     run(this, { runner: { fetch: { allowed_updates } } })
+  }
+
+  setKeyboard(
+    chatId: number | string,
+    msgId: number,
+    inline_keyboard: InlineKeyboardButton[][],
+  ) {
+    return setKeyboard(this, chatId, msgId, inline_keyboard)
   }
 }
 
