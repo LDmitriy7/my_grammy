@@ -8,6 +8,7 @@ export {
   type SessionFlavor,
 } from "https://deno.land/x/grammy@v1.17.2/mod.ts"
 export type {
+  BotCommand,
   InlineKeyboardButton,
   InlineKeyboardMarkup,
   MessageEntity,

@@ -1,5 +1,6 @@
 import {
   Bot,
+  BotCommand,
   Context,
   InlineKeyboard,
   InlineKeyboardButton,
@@ -31,6 +32,30 @@ export function getPhotoId(src: BaseContext) {
   const photo = src.message?.photo
   if (!photo) throw new Error("No message photo")
   return photo[photo.length - 1].file_id
+}
+
+export async function tryDeleteMsg<C extends Context>(
+  bot: Bot<C>,
+  chatId: number,
+  msgId: number,
+) {
+  try {
+    await bot.api.deleteMessage(chatId, msgId)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export function setChatCommands<C extends Context>(
+  bot: Bot<C>,
+  commands: BotCommand[],
+  chatId: number,
+) {
+  return bot.api.setMyCommands(commands, { scope: ChatScope(chatId) })
+}
+
+function ChatScope(chat_id: number) {
+  return { chat_id, type: "chat" } as const
 }
 
 const sendMessage = (ctx: BaseContext, chatId: number, msg: Msg) =>

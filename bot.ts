@@ -1,5 +1,6 @@
 import {
   Bot as _Bot,
+  BotCommand,
   Context,
   DenoKVAdapter,
   env,
@@ -12,7 +13,7 @@ import {
   session,
   Update,
 } from "./deps.ts"
-import { sendPhoto, setKeyboard } from "./lib.ts"
+import { sendPhoto, setChatCommands, setKeyboard, tryDeleteMsg } from "./lib.ts"
 import { BaseContext, BaseSession } from "./types.ts"
 
 const getToken = () => env.str("TOKEN")
@@ -52,14 +53,20 @@ export class Bot<S extends BaseSession> extends _Bot<BaseContext<S>> {
     return setKeyboard(this, chatId, msgId, inline_keyboard)
   }
 
-  sendPhoto(
+  sendPhoto = (
     chatId: number,
     photoId: string,
     text?: string,
     entities?: MessageEntity[],
-  ) {
-    return sendPhoto(this, chatId, photoId, text, entities)
-  }
+  ) => sendPhoto(this, chatId, photoId, text, entities)
+
+  tryDeleteMsg = (
+    chatId: number,
+    msgId: number,
+  ) => tryDeleteMsg(this, chatId, msgId)
+
+  setChatCommands = (commands: BotCommand[], chatId: number) =>
+    setChatCommands(this, commands, chatId)
 }
 
 type AllowedUpdates = ReadonlyArray<Exclude<keyof Update, "update_id">>
