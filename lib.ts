@@ -27,6 +27,12 @@ export function sendPhoto<C extends Context>(
   return bot.api.sendPhoto(chatId, photoId, opts)
 }
 
+export function getPhotoId(src: BaseContext) {
+  const photo = src.message?.photo
+  if (!photo) throw new Error("No message photo")
+  return photo[photo.length - 1].file_id
+}
+
 const sendMessage = (ctx: BaseContext, chatId: number, msg: Msg) =>
   ctx.api.sendMessage(
     chatId,
