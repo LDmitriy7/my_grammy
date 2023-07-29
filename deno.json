@@ -1,3 +1,6 @@
 {
-  "fmt": { "semiColons": false }
+  "fmt": { "semiColons": false },
+  "tasks": {
+    "test": "deno run -A --unstable test.ts"
+  }
 }

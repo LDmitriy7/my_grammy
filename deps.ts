@@ -11,6 +11,7 @@ export type {
   InlineKeyboardButton,
   InlineKeyboardMarkup,
   MessageEntity,
+  Update,
 } from "https://deno.land/x/grammy@v1.17.2/types.ts"
 export {
   hydrateReply,
@@ -25,4 +26,3 @@ export { DenoKVAdapter } from "https://deno.land/x/grammy_storages@v2.3.0/denokv
 export { default as env } from "https://deno.land/x/parse_env@v0.0.3/mod.ts"
 export { sleep } from "https://deno.land/x/sleep@v1.2.1/mod.ts"
 export { Observer } from "./observer.ts"
-export { mongoose } from "npm:@typegoose/typegoose"

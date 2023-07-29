@@ -3,16 +3,9 @@ import {
   InlineKeyboardButton,
   InlineKeyboardMarkup,
   MessageEntity,
-  mongoose,
 } from "./deps.ts"
 import { Msg } from "./msg.ts"
 import { BaseContext } from "./types.ts"
-
-export function connectToMongo(db: string, host: string, password: string) {
-  mongoose.connect(
-    `mongodb://root:${password}@${host}:27017/${db}?authSource=admin`,
-  )
-}
 
 const sendOptions = { disable_web_page_preview: true }
 

@@ -1,4 +1,3 @@
-import { Update } from "tg"
 import {
   Bot as _Bot,
   Context,
@@ -9,6 +8,7 @@ import {
   run,
   sequentialize,
   session,
+  Update,
 } from "./deps.ts"
 import { BaseContext, BaseSession } from "./types.ts"
 
