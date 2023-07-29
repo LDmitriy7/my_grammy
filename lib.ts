@@ -1,4 +1,5 @@
 import {
+  Bot,
   InlineKeyboard,
   InlineKeyboardButton,
   InlineKeyboardMarkup,
@@ -19,8 +20,31 @@ const sendMessage = (ctx: BaseContext, chatId: number, msg: Msg) =>
 const reply = (ctx: BaseContext, msg: Msg) =>
   sendMessage(ctx, ctx.chat!.id, msg)
 
-const setState = <State extends string>(ctx: BaseContext, state?: State) =>
-  ctx.session.state = state
+export const setState = <State extends string>(
+  ctx: BaseContext,
+  state?: State,
+) => ctx.session.state = state
+
+export function parseQuery<Prefix extends string>(
+  ctx: BaseContext,
+  prefix: Prefix,
+) {
+  return removePrefix(
+    ctx.callbackQuery!.data!,
+    prefix + CALLBACK_DATA_SEPARATOR,
+  )
+}
+
+export function setKeyboard(
+  bot: Bot,
+  chatId: number | string,
+  msgId: number,
+  inline_keyboard: InlineKeyboardButton[][],
+) {
+  return bot.api.editMessageReplyMarkup(chatId, msgId, {
+    reply_markup: { inline_keyboard },
+  })
+}
 
 function parseEntity(entity: MessageEntity, text: string) {
   return text.slice(entity.offset, entity.offset + entity.length)
@@ -93,13 +117,6 @@ export function CallbackButton(
   return { text: text ?? data, callback_data: data }
 }
 
-export function parseQuery(ctx: BaseContext, prefix: string) {
-  return removePrefix(
-    ctx.callbackQuery!.data!,
-    prefix + CALLBACK_DATA_SEPARATOR,
-  )
-}
-
 export {
   addButtons,
   exclude,
@@ -108,6 +125,5 @@ export {
   removePrefix,
   reply,
   sendMessage,
-  setState,
   Time,
 }

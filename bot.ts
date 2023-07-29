@@ -37,6 +37,7 @@ export class Bot<S extends BaseSession> extends _Bot<BaseContext<S>> {
 
   async run(allowed_updates = ALLOWED_UPDATES) {
     await this.api.deleteWebhook()
+    this.catch(console.error)
     run(this, { runner: { fetch: { allowed_updates } } })
   }
 }
